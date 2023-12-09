@@ -3,16 +3,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import numpy as np
-from tensorflow import pad_sequences
 
 data_dict = pickle.load(open('data.pickle', 'rb'))
 
-print(type(data_dict['data']))
+max_len = max(len(entry) for entry in data_dict['data'])
 
-data = np.asarray(data_dict['data'])
-labels = np.asarray(data_dict['labels'])
-
-# padded_data = pad_sequences(data_dict['data'], dtype='float32', padding='post')
+data_padded = [entry + [0] * (max_len - len(entry)) for entry in data_dict['data']]
+data = np.asarray(data_padded)
 
 labels = np.asarray(data_dict['labels'])
 

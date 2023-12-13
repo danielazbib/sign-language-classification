@@ -96,17 +96,16 @@ while True:
                 y_.append(y)
             break
 
-        max_len = max(len(data_aux), 84)
-        # print(data_aux)
-        data_aux_padded = data_aux + [0] * (max_len - len(data_aux))
-        # print(data_aux_padded)
-
         x1 = int(min(x_) * W) - 10
         y1 = int(min(y_) * H) - 10
 
         x2 = int(max(x_) * W) - 10
         y2 = int(max(y_) * H) - 10
 
+        max_len = max(len(data_aux), 84)
+        # print(data_aux)
+        data_aux_padded = data_aux + [0] * (max_len - len(data_aux))
+        # print(data_aux_padded)
 
         prediction = model.predict([np.asarray(data_aux_padded)])[0]
         # print(prediction)
@@ -115,7 +114,10 @@ while True:
         cv.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0, 0), 4)
         cv.putText(frame, prediction, (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0, 0), 3, cv.LINE_AA)
         cv.imshow('frame', frame)
-        cv.waitKey(1)
-        
-    cap.release()
-    cv.destroyAllWindows()
+
+        #ends loop
+        if cv.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to exit
+            break
+
+cap.release()
+cv.destroyAllWindows()

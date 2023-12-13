@@ -28,7 +28,7 @@ x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.3,
 classifiers = {
     'Naive Bayes': GaussianNB(),
     'Decision Trees': DecisionTreeClassifier(random_state=42),
-    'Random Forests': RandomForestClassifier(random_state=42),
+    'Random Forests': RandomForestClassifier(),
     'Support Vector Machines': SVC(random_state=42),
     'K-Nearest Neighbors': KNeighborsClassifier()
 }
@@ -60,6 +60,13 @@ for name, model in classifiers.items():
 
 best_model = max(results, key=results.get)
 print(f'\nBest Model: {best_model} with Accuracy: {results[best_model]:.4f}')
+
+best = classifiers[best_model]
+print(best)
+
+f = open('model.p', 'wb')
+pickle.dump({'model': best}, f)
+f.close()
 
 # model evauluation metric line graph
 plt.figure(figsize=(10, 6))

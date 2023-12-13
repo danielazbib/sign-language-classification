@@ -63,12 +63,13 @@ print(f'\nBest Model: {best_model} with Accuracy: {results[best_model]:.4f}')
 
 best = classifiers[best_model]
 
+#pickles best trained model to be used in main.py
 f = open('model.p', 'wb')
 pickle.dump({'model': best}, f)
 f.close()
 
 # model evauluation metric line graph
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(23, 6))
 plt.plot(model_names, accuracy_list, marker='o', label='Accuracy')
 plt.plot(model_names, precision_list, marker='o', label='Weighted Avg Precision')
 plt.plot(model_names, recall_list, marker='o', label='Weighted Avg Recall')
@@ -83,7 +84,7 @@ plt.show()
 #model evauluation metric bargraph
 barWidth = 0.2
 
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(20, 3))
 
 r1 = np.arange(len(model_names))
 r2 = [x + barWidth for x in r1]
@@ -99,7 +100,7 @@ plt.xlabel('Models', fontweight='bold')
 plt.xticks([r + barWidth for r in range(len(model_names))], model_names)
 
 plt.title('Model Evaluation Metrics')
-plt.legend()
+plt.legend(loc='upper right')
 plt.show()
 
 #confusion matrix heatmap graph

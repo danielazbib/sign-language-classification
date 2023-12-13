@@ -22,10 +22,46 @@ mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
-labels_dict = {0: 'L', 1: 'O', 2: 'V', 3: 'E'}
+# Constructing a dictionary with keys as numbers (0-9) and values as digits.
 
-
-
+labels_dict = {
+    0: '0',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
+    10: 'a',
+    11: 'b',
+    12: 'c',
+    13: 'd',
+    14: 'e',
+    15: 'f',
+    16: 'g',
+    17: 'h',
+    18: 'i',
+    19: 'j',
+    20: 'k',
+    21: 'l',
+    22: 'm',
+    23: 'n',
+    24: 'o',
+    25: 'p',
+    26: 'q',
+    27: 'r',
+    28: 's',
+    29: 't',
+    30: 'u',
+    31: 'v',
+    32: 'w',
+    33: 'x',
+    34: 'y',
+    35: 'z'
+}
 #takes in the data from the active computer vision
 
 while True:
@@ -60,20 +96,26 @@ while True:
                 y_.append(y)
             break
 
+        max_len = max(len(data_aux), 84)
+        # print(data_aux)
+        data_aux_padded = data_aux + [0] * (max_len - len(data_aux))
+        # print(data_aux_padded)
+
         x1 = int(min(x_) * W) - 10
         y1 = int(min(y_) * H) - 10
 
         x2 = int(max(x_) * W) - 10
         y2 = int(max(y_) * H) - 10
 
-        prediction = model.predict([np.asarray(data_aux)])
-        predicted_character = labels_dict[int(prediction[0])]
-        # cnt.write(predicted_character)
+
+        prediction = model.predict([np.asarray(data_aux_padded)])[0]
+        # print(prediction)
+        # predicted_character = labels_dict[prediction]
+
         cv.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0, 0), 4)
-        cv.putText(frame, predicted_character, (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0, 0), 3, cv.LINE_AA)
+        cv.putText(frame, prediction, (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0, 0), 3, cv.LINE_AA)
         cv.imshow('frame', frame)
         cv.waitKey(1)
-
-# noinspection PyUnreachableCode
-cap.release()
-cv.destroyAllWindows()
+        
+    cap.release()
+    cv.destroyAllWindows()

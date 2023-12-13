@@ -62,7 +62,6 @@ best_model = max(results, key=results.get)
 print(f'\nBest Model: {best_model} with Accuracy: {results[best_model]:.4f}')
 
 best = classifiers[best_model]
-print(best)
 
 f = open('model.p', 'wb')
 pickle.dump({'model': best}, f)

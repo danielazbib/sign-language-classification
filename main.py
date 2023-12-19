@@ -113,7 +113,9 @@ while True:
 
         cv.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0, 0), 4)
         cv.putText(frame, prediction, (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0, 0), 3, cv.LINE_AA)
+        cv.putText(frame, 'Press q to exit', (10, 50), cv.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv.LINE_AA)
         cv.imshow('frame', frame)
+
 
         #ends loop
         if cv.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to exit
